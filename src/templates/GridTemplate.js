@@ -8,12 +8,22 @@ import Paragraph from 'components/atoms/Paragraph/Paragraph';
 
 const StyledWrapper = styled.div`
   padding: 25px 150px 25px 70px;
+  @media (max-width: 768px) {
+    padding: 5px 10px 10px;
+  }
 `;
 
 const StyledGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 85px;
+  @media (max-width: 1600px) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 35px;
+  }
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
 const StyledPageHeader = styled.div`

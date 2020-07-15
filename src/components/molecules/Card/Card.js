@@ -10,12 +10,26 @@ import Avatar from 'assets/avatar.jpg';
 
 const StyledWrapper = styled.div`
   min-height: 380px;
+  min-width: 350px;
   box-shadow: 0 10px 30px -10px hsla(0, 0%, 0%, 0.1);
   border-radius: 10px;
   overflow: hidden;
   position: relative;
   display: grid;
   grid-template-rows: 0.25fr 1fr;
+
+  @media (max-width: 1024px) {
+    margin-left: -20px;
+  }
+
+  @media (max-width: 900px) {
+    align-items: center;
+    margin: 10px auto;
+  }
+  @media (max-width: 530px) {
+    width: 200px;
+    margin-left: -20px;
+  }
 `;
 
 const InnerWrapper = styled.div`
@@ -54,6 +68,11 @@ const StyledAvatar = styled.img`
   position: absolute;
   right: 25px;
   top: 25px;
+  @media (max-width: 530px) {
+    width: 70px;
+    height: 70px;
+    top: 35px;
+  }
 `;
 
 const StyledLinkButton = styled.a`
@@ -71,15 +90,21 @@ const StyledLinkButton = styled.a`
 `;
 
 class Card extends Component {
-  state: {
+  state = {
     redirect: false,
   };
+
+  handleCardClick = () => this.setState({ redirect: true });
 
   render() {
     const { id, cardType, title, created, twitterName, articleUrl, content } = this.props;
 
+    if (this.state.redirect) {
+      return <Redirect to={`${cardType}/${id}`} />;
+    }
+
     return (
-      <StyledWrapper>
+      <StyledWrapper onClick={this.handleCardClick}>
         <InnerWrapper activeColor={cardType}>
           <StyledHeading>{title}</StyledHeading>
           <DateInfo>{created}</DateInfo>

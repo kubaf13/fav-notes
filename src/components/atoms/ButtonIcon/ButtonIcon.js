@@ -14,6 +14,10 @@ const ButtonIcon = styled.button`
   &.active {
     background-color: white;
   }
+  @media (max-width: 768px) {
+    width: 50px;
+    height: 50px;
+  }
 `;
 
 export default ButtonIcon;

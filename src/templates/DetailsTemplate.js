@@ -1,14 +1,107 @@
 import React from 'react';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import UserPageTemplate from 'templates/UserPageTemplate';
+import Heading from 'components/atoms/Heading/Heading';
+import Paragraph from 'components/atoms/Paragraph/Paragraph';
+import Button from 'components/atoms/Button/Button';
+import Avatar from 'assets/avatar.jpg';
 
-const DetailsTemplate = ({ children }) => (
-  <UserPageTemplate>
-    {children}
-    <Link to="/">go back</Link>
+const StyledWrapper = styled.div`
+  padding: 25px 150px 25px 70px;
+  max-width: 50vw;
+  position: relative;
+
+  @media (max-width: 1200px) {
+    margin: 140px auto;
+    max-width: 80vw;
+  }
+  @media (max-width: 533px) {
+    margin: 140px auto;
+    padding: 10px 10px 0;
+    max-width: 80vw;
+  }
+`;
+
+const StyledPageHeader = styled.div`
+  margin: 25px 0 50px 0;
+`;
+
+const StyledHeading = styled(Heading)`
+  margin: 25px 0 0 0;
+
+  ::first-letter {
+    text-transform: uppercase;
+  }
+`;
+
+const StyledParagraph = styled(Paragraph)`
+  margin: 0;
+  font-weight: ${({ theme }) => theme.bold};
+`;
+
+const StyledLink = styled.a`
+  display: block;
+  font-weight: ${({ theme }) => theme.bold};
+  font-size: ${({ theme }) => theme.fontSize.xs};
+  color: black;
+  text-transform: uppercase;
+  margin: 20px 0 50px;
+`;
+
+const StyledImage = styled.img`
+  position: absolute;
+  right: -80px;
+  top: 50px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  @media (max-width: 1024px) {
+    right: 5px;
+    top: 10px;
+  }
+
+  @media (max-width: 533px) {
+    right: 10px;
+    top: -100px;
+  }
+`;
+
+const DetailsTemplate = ({ pageType, title, created, content, articleUrl, twitterName }) => (
+  <UserPageTemplate pageType={pageType}>
+    <StyledWrapper>
+      <StyledPageHeader>
+        <StyledHeading big as="h1">
+          {title}
+        </StyledHeading>
+        <StyledParagraph>{created}</StyledParagraph>
+      </StyledPageHeader>
+      <Paragraph>{content}</Paragraph>
+      {pageType === 'articles' && <StyledLink href={articleUrl}>Open article</StyledLink>}
+      {pageType === 'twitters' && <StyledImage alt={title} src={Avatar} />}
+      <Button as={Link} to={`/${pageType}`} activeColor={pageType}>
+        save / close
+      </Button>
+    </StyledWrapper>
   </UserPageTemplate>
 );
+
+DetailsTemplate.propTypes = {
+  pageType: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  created: PropTypes.string,
+  content: PropTypes.string,
+  articleUrl: PropTypes.string,
+  twitterName: PropTypes.string,
+};
+
+DetailsTemplate.defaultProps = {
+  title: '',
+  created: '',
+  content: '',
+  articleUrl: '',
+  twitterName: '',
+};
 
 export default DetailsTemplate;
